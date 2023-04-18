@@ -12,9 +12,9 @@ export class RoleGuard implements CanActivate {
     const currentRole: Role = user?.role;
     const requiredRole = this.reflector.get<Role>(ROLE_KEY, context.getHandler());
 
-    // Consider EMPLOYEE > ASSOCIATE
-    // So, any endpoint allowed for accessing via an ASSOCIATE will also be allowed for EMPLOYEE
-    if (currentRole === 'EMPLOYEE') return true;
+    // Order of the roles -> ADMIN > BUYER and SELLER
+    // So, any endpoint allowed for accessing via a BUYER or SELLER will also be allowed for ADMIN
+    if (currentRole === 'ADMIN') return true;
     return currentRole === requiredRole;
   }
 }
